@@ -40,9 +40,6 @@ export class Hoop {
 
     if (wasAbove && nowBelow && inHoopX && ball.vy > 0 && !this.scored) {
       this.scored = true;
-      setTimeout(() => {
-        this.scored = false;
-      }, 800);
       this.lastBallY = ball.y;
       return true;
     }
@@ -88,8 +85,6 @@ export class Hoop {
 
         ball.vx *= 0.7;
         ball.vy *= 0.7;
-
-        ball.angularVelocity = ball.vx * 0.05;
       }
     }
   }
