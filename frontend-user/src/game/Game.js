@@ -68,7 +68,7 @@ export class Game {
     });
     this.canvas.addEventListener("touchend", (e) => {
       e.preventDefault();
-      this.onPointerUp(e.touches[0]);
+      this.onPointerUp(e.changedTouches[0]);
     });
   }
 
@@ -229,6 +229,8 @@ export class Game {
     this.ball.y = this.ballStartPos.y;
     this.ball.vx = 0;
     this.ball.vy = 0;
+    this.ball.angularVelocity = 0;
+    this.ball.rotation = 0;
     this.ball.isResting = true;
 
     // Reset streak if this shot missed
@@ -236,6 +238,7 @@ export class Game {
       this.streak = 0;
       this.updateUI();
     }
+    this.hoop.reset();
     this.shotFired = false;
   }
 

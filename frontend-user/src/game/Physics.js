@@ -6,7 +6,6 @@ export class Physics {
 
   applyGravity(ball) {
     ball.vy += this.gravity;
-    ball.vx += this.gravity * 0.1;
   }
 
   applyAirResistance(ball) {
