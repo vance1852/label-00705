@@ -68,7 +68,7 @@ export class Game {
     });
     this.canvas.addEventListener("touchend", (e) => {
       e.preventDefault();
-      this.onPointerUp(e.touches[0]);
+      this.onPointerUp();
     });
   }
 
@@ -111,6 +111,7 @@ export class Game {
       const angle = Math.atan2(dy, dx);
       this.ball.vx = Math.cos(angle) * power;
       this.ball.vy = Math.sin(angle) * power;
+      this.ball.angularVelocity = (this.dragEnd.x - this.dragStart.x) * 0.01;
       this.ball.isResting = false;
       this.shotFired = true;
     }
@@ -203,6 +204,7 @@ export class Game {
       ball.y = this.canvas.height - 40 - ball.radius;
       ball.vy *= -0.6;
       ball.vx *= 0.8;
+      ball.angularVelocity += ball.vx * 0.03;
 
       if (Math.abs(ball.vy) < 1.5 && Math.abs(ball.vx) < 1) {
         this.resetBall();
@@ -212,15 +214,18 @@ export class Game {
     if (ball.x - ball.radius < 0) {
       ball.x = ball.radius;
       ball.vx *= -0.7;
+      ball.angularVelocity = -ball.vy * 0.05;
     }
     if (ball.x + ball.radius > this.canvas.width) {
       ball.x = this.canvas.width - ball.radius;
       ball.vx *= -0.7;
+      ball.angularVelocity = ball.vy * 0.05;
     }
 
     if (ball.y - ball.radius < 0) {
       ball.y = ball.radius;
       ball.vy *= -0.7;
+      ball.angularVelocity += ball.vx * 0.03;
     }
   }
 
@@ -229,6 +234,8 @@ export class Game {
     this.ball.y = this.ballStartPos.y;
     this.ball.vx = 0;
     this.ball.vy = 0;
+    this.ball.angularVelocity = 0;
+    this.ball.rotation = 0;
     this.ball.isResting = true;
 
     // Reset streak if this shot missed
@@ -237,6 +244,7 @@ export class Game {
       this.updateUI();
     }
     this.shotFired = false;
+    this.hoop.reset();
   }
 
   updateUI() {

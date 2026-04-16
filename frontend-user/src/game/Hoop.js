@@ -85,6 +85,11 @@ export class Hoop {
 
         ball.vx *= 0.7;
         ball.vy *= 0.7;
+
+        const tangentX = -ny;
+        const tangentY = nx;
+        const tangentVelocity = ball.vx * tangentX + ball.vy * tangentY;
+        ball.angularVelocity = tangentVelocity * 0.05;
       }
     }
   }
