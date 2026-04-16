@@ -85,6 +85,8 @@ export class Hoop {
 
         ball.vx *= 0.7;
         ball.vy *= 0.7;
+
+        ball.angularVelocity = (ball.vy * nx - ball.vx * ny) * 0.1;
       }
     }
   }
